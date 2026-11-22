@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CSharpNLVED.App.ExportWindow"
+        Title="Export video"
+        Width="640" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner">
+  <StackPanel Margin="20" Spacing="14">
+    <TextBlock x:Name="SummaryText" Foreground="#8A8F98" TextWrapping="Wrap" />
+
+    <Grid ColumnDefinitions="90,*,Auto" RowDefinitions="Auto,Auto,Auto">
+      <TextBlock Grid.Row="0" Text="Save to" VerticalAlignment="Center" />
+      <TextBox x:Name="OutputBox" Grid.Row="0" Grid.Column="1" Margin="0,0,8,8" />
+      <Button x:Name="BrowseButton" Grid.Row="0" Grid.Column="2" Content="Browse…" Margin="0,0,0,8" />
+
+      <TextBlock Grid.Row="1" Text="Format" VerticalAlignment="Center" />
+      <ComboBox x:Name="CodecBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch" Margin="0,0,0,8" />
+
+      <TextBlock Grid.Row="2" Text="Quality" VerticalAlignment="Center" />
+      <ComboBox x:Name="QualityBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch" />
+    </Grid>
+
+    <ProgressBar x:Name="ExportProgressBar" Minimum="0" Maximum="1" Height="8" IsVisible="False" />
+    <TextBlock x:Name="StatusText" TextWrapping="Wrap" />
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button x:Name="ShowFolderButton" Content="Show in folder" IsVisible="False" />
+      <Button x:Name="ExportButton" Content="Export" Classes="accent" MinWidth="90"
+              HorizontalContentAlignment="Center" />
+      <Button x:Name="CloseButton" Content="Close" MinWidth="90" HorizontalContentAlignment="Center" />
+    </StackPanel>
+  </StackPanel>
+</Window>

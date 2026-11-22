@@ -1,0 +1,76 @@
+# Build and publish output
+[Bb]in/
+[Oo]bj/
+/out/
+/publish/
+/artifacts/
+*.binlog
+/CSharpNLVED-*.zip
+/CSharpNLVED-*.tar.gz
+
+# IDE and per-user files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+*.DotSettings.user
+*.swp
+*~
+
+# Private assistant notes and settings
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.mcp.json
+
+# Secrets and signing keys
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+*.snk
+*.publishsettings
+secrets.json
+
+# Portable runtime data created next to the executable
+/data/
+/src/*/data/
+
+# Project files (they contain local media paths) and unfinished exports
+*.csnlved
+*.csnlved-tmp.*
+
+# Tests, logs and crash dumps
+TestResults/
+*.trx
+*.coverage
+coverage.cobertura.xml
+*.log
+*.dmp
+*.stackdump
+
+# Local sample media
+*.[Mm][Pp]4
+*.[Mm][Kk][Vv]
+*.[Mm][Oo][Vv]
+*.[Mm]4[Vv]
+*.[Aa][Vv][Ii]
+*.[Ww][Ee][Bb][Mm]
+*.[Mm][Pp]3
+*.[Ww][Aa][Vv]
+*.[Mm]4[Aa]
+*.[Ff][Ll][Aa][Cc]
+
+# OS junk
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+*.lnk
+.directory

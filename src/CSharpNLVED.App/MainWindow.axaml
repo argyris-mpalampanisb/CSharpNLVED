@@ -1,0 +1,136 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:CSharpNLVED.App"
+        x:Class="CSharpNLVED.App.MainWindow"
+        Title="CSharpNLVED"
+        Width="1280" Height="760"
+        MinWidth="900" MinHeight="560"
+        WindowStartupLocation="CenterScreen">
+
+  <!-- Layout: top bar / preview + media area / timeline / status bar.
+       The areas are placeholders that later steps will fill in. -->
+  <Grid RowDefinitions="Auto,*,330,Auto">
+
+    <!-- Top bar -->
+    <Border Grid.Row="0" Background="#1B1D23" Padding="16,8">
+      <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12">
+          <TextBlock Text="CSharpNLVED" FontSize="20" FontWeight="Bold" Foreground="#FF6B4A"
+                     VerticalAlignment="Center" />
+          <TextBlock Text="simple, fast video joining" Foreground="#8A8F98"
+                     VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" Margin="20,0,0,0">
+          <Menu VerticalAlignment="Center">
+            <MenuItem Header="_File">
+              <MenuItem x:Name="NewItem" Header="_New project" InputGesture="Ctrl+N" />
+              <MenuItem x:Name="OpenItem" Header="_Open…" InputGesture="Ctrl+O" />
+              <Separator />
+              <MenuItem x:Name="SaveItem" Header="_Save" InputGesture="Ctrl+S" />
+              <MenuItem x:Name="SaveAsItem" Header="Save _as…" InputGesture="Ctrl+Shift+S" />
+              <Separator />
+              <MenuItem x:Name="AddClipsItem" Header="Add _clips…" InputGesture="Ctrl+I" />
+              <MenuItem x:Name="ExportItem" Header="_Export video…" InputGesture="Ctrl+E" />
+              <Separator />
+              <MenuItem x:Name="ExitItem" Header="E_xit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+              <MenuItem x:Name="UndoItem" Header="_Undo" InputGesture="Ctrl+Z" />
+              <MenuItem x:Name="RedoItem" Header="_Redo" InputGesture="Ctrl+Y" />
+              <Separator />
+              <MenuItem x:Name="AddTextItem" Header="Add _text at playhead" InputGesture="T" />
+            </MenuItem>
+          </Menu>
+          <Button x:Name="AddClipsButton" Content="Add clips…" VerticalAlignment="Center" />
+          <Button x:Name="ExportButton" Content="Export…" Classes="accent" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <!-- FFmpeg banner: shown when FFmpeg is missing or an update is available -->
+        <Border x:Name="FFmpegBanner" Grid.Column="3" IsVisible="False"
+                Background="#2A2E37" CornerRadius="6" Padding="12,6">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock x:Name="BannerText" VerticalAlignment="Center" MaxWidth="560"
+                       TextTrimming="CharacterEllipsis" Foreground="#E4E6EB" />
+            <ProgressBar x:Name="BannerProgress" Width="160" Minimum="0" Maximum="1"
+                         VerticalAlignment="Center" IsVisible="False" />
+            <Button x:Name="BannerAction" Content="Download" Classes="accent" />
+            <Button x:Name="BannerDismiss" Content="Later" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+
+    <!-- Media bin + preview -->
+    <Grid Grid.Row="1" ColumnDefinitions="300,*" Margin="8">
+      <Border x:Name="MediaPanel" Grid.Column="0" Background="#22252C" CornerRadius="6" Margin="0,0,8,0" Padding="8">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Text="Media" FontWeight="SemiBold" Margin="4,0,0,6" />
+          <TextBlock x:Name="MediaEmptyText" DockPanel.Dock="Top" Foreground="#6C717A" Margin="4,0"
+                     TextWrapping="Wrap" Text="No files yet. Drag videos, music or whole folders here or onto the timeline, or use &quot;Add clips…&quot;. Double-click a file here to add it to the timeline." />
+          <ListBox x:Name="MediaList" Background="Transparent" FontSize="12" />
+        </DockPanel>
+      </Border>
+      <Border Grid.Column="1" Background="#0E0F12" CornerRadius="6" ClipToBounds="True">
+        <Grid>
+          <TextBlock Text="Preview (coming later). Select a text clip to edit it here."
+                     Foreground="#6C717A" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <!-- Replaces the placeholder while exactly one text clip is selected. -->
+          <local:TextPanel x:Name="TextEditor" IsVisible="False" />
+        </Grid>
+      </Border>
+    </Grid>
+
+    <!-- Timeline -->
+    <Border Grid.Row="2" Background="#22252C" CornerRadius="6" Margin="8,0,8,8" Padding="8">
+      <DockPanel>
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="4,0,0,6">
+          <TextBlock x:Name="TimelinePlaceholder" Grid.Column="0" Foreground="#8A8F98"
+                     VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+            <ToggleButton x:Name="RippleToggle" Content="Auto-ripple" FontSize="12" Padding="8,2"
+                          ToolTip.Tip="When on, deleting or trimming a clip moves the clips after it to close (or open) the gap." />
+            <Button x:Name="UnlinkButton" Content="Unlink" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Unlink the selected clip from its video/audio partner (U). Ctrl+click two clips, then U, to link them." />
+            <Button x:Name="SplitButton" Content="Split" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Split the clip under the red playhead (S). Click the ruler to place the playhead." />
+            <Button x:Name="RemoveClipButton" Content="Remove" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Remove the selected clip (Delete)" />
+            <Button x:Name="SortButton" Content="Sort ▾" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Sort the selected clip's track (or the video track)" />
+            <Button x:Name="AddTextButton" Content="+ Text" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Add a text clip at the red playhead, above the video there (T). Double-click a text clip to change its text." />
+            <Button x:Name="AddVideoTrackButton" Content="+ Video track" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Add a video track on top (for overlays)" />
+            <Button x:Name="AddAudioTrackButton" Content="+ Audio track" FontSize="12" Padding="8,2" />
+            <Button x:Name="FitButton" Content="Fit" FontSize="12" Padding="8,2"
+                    ToolTip.Tip="Zoom to show the whole project. Mouse wheel zooms, Shift+wheel scrolls." />
+          </StackPanel>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="216,*">
+          <ScrollBar x:Name="TimelineScroll" Grid.Column="1" Orientation="Horizontal" AllowAutoHide="False" />
+        </Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+          <Grid ColumnDefinitions="216,*" VerticalAlignment="Top">
+            <StackPanel x:Name="TrackHeaders" Grid.Column="0" Margin="0,0,6,0" />
+            <local:TimelineControl x:Name="Timeline" Grid.Column="1" />
+          </Grid>
+        </ScrollViewer>
+      </DockPanel>
+    </Border>
+
+    <!-- Status bar -->
+    <Border Grid.Row="3" Background="#1B1D23" Padding="12,6">
+      <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+        <TextBlock x:Name="StatusLeft" Grid.Column="0" Foreground="#8A8F98" FontSize="12"
+                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+        <TextBlock x:Name="GpuStatus" Grid.Column="1" Foreground="#8A8F98" FontSize="12"
+                   VerticalAlignment="Center" Margin="16,0,8,0" Text="GPU: waiting for FFmpeg" />
+        <Button x:Name="GpuButton" Grid.Column="2" Content="GPU encoders…" FontSize="12"
+                Padding="8,2" IsEnabled="False" Margin="0,0,16,0" />
+        <TextBlock x:Name="StatusRight" Grid.Column="3" Foreground="#8A8F98" FontSize="12"
+                   VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

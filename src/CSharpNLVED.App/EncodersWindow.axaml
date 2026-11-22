@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CSharpNLVED.App.EncodersWindow"
+        Title="GPU encoders"
+        Width="760" Height="600"
+        MinWidth="560" MinHeight="400"
+        WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="16">
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
+      <TextBlock x:Name="BusyText" Grid.Column="0" VerticalAlignment="Center" Foreground="#8A8F98" />
+      <Button x:Name="RecheckButton" Grid.Column="1" Content="Re-check now" Margin="0,0,8,0" />
+      <Button x:Name="CloseButton" Grid.Column="2" Content="Close" />
+    </Grid>
+    <ScrollViewer>
+      <StackPanel x:Name="ReportPanel" Spacing="6" />
+    </ScrollViewer>
+  </DockPanel>
+</Window>

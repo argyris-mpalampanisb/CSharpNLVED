@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CSharpNLVED.App/CSharpNLVED.App.csproj" />
+    <Project Path="src/CSharpNLVED.Core/CSharpNLVED.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CSharpNLVED.Core.Tests/CSharpNLVED.Core.Tests.csproj" />
+  </Folder>
+</Solution>

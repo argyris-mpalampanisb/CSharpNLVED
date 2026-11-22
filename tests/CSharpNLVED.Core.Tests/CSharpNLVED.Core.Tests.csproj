@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>CSharpNLVED.Core.Tests</RootNamespace>
+
+    <!-- .NET 10+ SDKs run tests with Microsoft.Testing.Platform (opted in via global.json). -->
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Floating version: tests always use the newest stable xUnit.net v3. -->
+    <PackageReference Include="xunit.v3" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CSharpNLVED.Core\CSharpNLVED.Core.csproj" />
+  </ItemGroup>
+</Project>
