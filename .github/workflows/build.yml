@@ -38,6 +38,9 @@ jobs:
             echo "APP_VERSION=0.0.0-dev.${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
           fi
 
+      - name: Test
+        run: dotnet test --project tests/CSharpNLVED.Core.Tests/CSharpNLVED.Core.Tests.csproj -c Release
+
       - name: Publish (self-contained, single file)
         shell: bash
         run: >
@@ -53,6 +56,9 @@ jobs:
       - name: Package
         shell: bash
         run: |
+          cp LICENSE out/CSharpNLVED/
+          # Debug symbols are over a third of the Windows download.
+          rm -f out/CSharpNLVED/*.pdb
           cd out
           if [[ "${{ matrix.rid }}" == win-* ]]; then
             7z a "../CSharpNLVED-${{ matrix.rid }}.zip" CSharpNLVED
@@ -79,3 +85,5 @@ jobs:
         with:
           files: dist/*
           generate_release_notes: true
+          # Tags with a suffix (v0.1.0-alpha) become pre-releases.
+          prerelease: ${{ contains(github.ref_name, '-') }}

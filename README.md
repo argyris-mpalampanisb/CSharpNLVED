@@ -72,7 +72,10 @@ Hardware encoding in video editors can quietly break after a driver, kernel or s
 
 ### Download
 
-There are no releases yet. To try a development build:
+1. Open the [Releases page](https://github.com/argyris-mpalampanisb/CSharpNLVED/releases) and download the archive for your system from the newest release.
+2. Extract it and run `CSharpNLVED`.
+
+To try a development build instead:
 
 1. Open the [latest successful builds](https://github.com/argyris-mpalampanisb/CSharpNLVED/actions/workflows/build.yml?query=branch%3Amain+is%3Asuccess) and select the top run.
 2. Download the artifact for your system (you need to be signed in to GitHub).
@@ -185,7 +188,7 @@ Replace `win-x64` with `linux-x64`, `osx-arm64` or `osx-x64` as needed:
 dotnet publish src/CSharpNLVED.App -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o out/win-x64
 ```
 
-Pushing a tag like `v0.1.0` makes GitHub Actions build all four targets and attach them to a release.
+Pushing a tag like `v0.1.0` makes GitHub Actions test and build all four targets and attach them to a release. A tag with a suffix, like `v0.1.0-alpha`, becomes a pre-release.
 
 </details>
 
