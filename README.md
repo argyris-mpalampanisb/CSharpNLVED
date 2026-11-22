@@ -1,7 +1,7 @@
 # CSharpNLVED
 
 A small, portable, free and open-source video editor (alpha, expect bugs) for the everyday job:
-put clips in order, trim them, set the volume per track, and export fast,
+cut and arrange clips, add text and fades, set the volume per track, and export
 using your GPU encoder (NVENC, AMF, Quick Sync, VideoToolbox, VAAPI).
 
 CSharpNLVED is GPU-only by design. It tests which GPU encoders really work, re-tests
@@ -9,22 +9,41 @@ automatically whenever FFmpeg, the kernel or a GPU driver changes, and when
 something is broken it tells you why (e.g. "driver/library mismatch, reboot")
 instead of silently falling back to slow CPU encoding.
 
-Runs on Windows, macOS and Linux. Built with C# / .NET 11 and Avalonia UI.
-Uses FFmpeg, which it downloads and keeps up to date by itself.
+For Windows, with untested builds for macOS and Linux. Built with C# / .NET 11 and Avalonia UI.
+Uses FFmpeg (7 or newer), which it offers to download and keep up to date.
 
 ## Status
 
-Early development. Roadmap:
+Alpha. Developed and tested on Windows. The Linux and macOS versions build, but
+haven't been tested on real machines yet.
 
-1. [x] App skeleton, cross-platform builds
-2. [x] FFmpeg manager (download + update check on launch)
-3. [x] GPU encoder detection with automatic re-check and Linux driver diagnostics
-4. [x] Project model (tracks, clips, per-track volume, undo/redo), saved as `.csnlved` JSON
-5. [x] GPU export with progress and cancel (plus a basic "Add clips…")
-6. [ ] Media import (ffprobe, thumbnails)
-7. [ ] Timeline UI
-8. [ ] Preview playback
-9. [ ] App self-update from GitHub releases
+### What works
+
+- **Timeline:** several video and audio tracks, move, trim, split, snapping, zoom,
+  sorting, optional auto-ripple, undo/redo
+- **Linked video and sound:** edited together, or unlinked to move them separately
+- **Audio:** volume per track
+- **Fades:** drag a clip's top corners to fade in or out
+- **Text clips:** font, size, colours, outline and position, with a live preview of the text
+- **Import:** file dialog, or drag and drop files and folders
+- **Export:** GPU encoding with progress, cancel and a log of every export
+- **Projects:** saved as readable `.csnlved` JSON files
+- **Setup:** FFmpeg download and update check, GPU encoder tests, Linux driver diagnostics
+
+### Roadmap
+
+- [ ] Transitions (in progress)
+  - [x] Project model and editing rules
+  - [ ] Export
+  - [ ] Timeline controls
+  - [ ] Built-in gradient wipes, including a soft cloud wipe
+- [ ] GPU decoding for faster export
+- [ ] Thumbnails and waveforms on clips
+- [ ] Preview of the frame at the playhead
+- [ ] Large time counter
+- [ ] Media bin with thumbnails
+- [ ] Full preview playback
+- [ ] App self-update from GitHub releases
 
 ## Building
 
