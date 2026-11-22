@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Floating version: tests always use the newest stable xUnit.net v3. -->
-    <PackageReference Include="xunit.v3" Version="*" />
+    <!-- Pinned so a new xUnit release can't break CI on its own. -->
+    <PackageReference Include="xunit.v3" Version="4.0.3" />
   </ItemGroup>
 
   <ItemGroup>
